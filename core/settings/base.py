@@ -2,7 +2,7 @@ from decouple import config, Csv  # Import the config and Csv class from the dec
 from pathlib import Path  # Import the Path class from the pathlib module
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -29,7 +29,8 @@ LOCAL_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-
+    'ckeditor',
+    'mptt'
 ]
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS
@@ -130,3 +131,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
+
+# ckeditor settings
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 700,
+    },
+}
+MPTT_ADMIN_LEVEL_INDENT = 20
