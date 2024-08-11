@@ -30,7 +30,8 @@ LOCAL_APPS = [
 
 THIRD_PARTY_APPS = [
     'ckeditor',
-    'mptt'
+    'mptt',
+    'rest_framework'
 ]
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS
@@ -143,3 +144,13 @@ CKEDITOR_CONFIGS = {
     },
 }
 MPTT_ADMIN_LEVEL_INDENT = 20
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'davronbekatadjanov111@gmail.com'
+EMAIL_HOST_PASSWORD = 'xyiqyirphncpmalx'
+
+OTP_CODE_ACTIVATION_TIME = 5
