@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -11,11 +11,24 @@ class Media(models.Model):
         IMAGE = "image", _("Image")
         VIDEO = "video", _("Video")
         FILE = "file", _("File")
-    file = models.FileField(_("File"), upload_to="files/")
+    file = models.FileField(_("File"), upload_to="files/", validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'mp4', 'pdf', 'docs'])])
     type = models.CharField(_("Type"), max_length=10, choices=MediaType.choices)
 
     def __str__(self):
         return self.id
+
+    def clean(self):
+        if self.type == self.MediaType.IMAGE:
+            if not self.file.name.endswith(('.jpg', '.jpeg', '.png')):
+                raise ValueError("Invalid file format for image")
+        elif self.type == self.MediaType.VIDEO:
+            if not self.file.name.endswith('.mp4'):
+                raise ValueError("Invalid file format for video")
+        elif self.type == self.MediaType.FILE:
+            if not self.file.name.endswith(('.pdf', '.docs')):
+                raise ValueError("Invalid file format for file")
+        else:
+            raise ValueError("Invalid file type")
 
     class Meta:
         verbose_name = _("Media")
