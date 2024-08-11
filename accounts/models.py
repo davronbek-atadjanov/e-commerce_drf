@@ -11,7 +11,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     email = models.EmailField(_('Email Address'), unique=True)
-    phone_number = models.CharField(_('Phone Number'), max_length=15, unique=True,
+    phone_number = models.CharField(_('Phone Number'), max_length=15,
                                     validators=[RegexValidator(r'^\+?1?\d{9,13}$')])
     address = models.CharField(_('Address'), max_length=255, blank=True)
     is_active = models.BooleanField(_("active"), default=False,

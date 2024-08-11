@@ -15,7 +15,7 @@ class Media(models.Model):
     type = models.CharField(_("Type"), max_length=10, choices=MediaType.choices)
 
     def __str__(self):
-        return self.id
+        return f"Media {self.id} - {self.type}"
 
     def clean(self):
         if self.type == self.MediaType.IMAGE:
