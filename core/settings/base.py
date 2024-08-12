@@ -154,3 +154,14 @@ EMAIL_HOST_USER = 'davronbekatadjanov111@gmail.com'
 EMAIL_HOST_PASSWORD = 'xyiqyirphncpmalx'
 
 OTP_CODE_ACTIVATION_TIME = 5
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+
+# Django restframework simple jwt
+

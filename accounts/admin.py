@@ -15,7 +15,7 @@ admin.site.unregister(Group)
 
 @admin.register(VerificationOtp)
 class VerificationOtpAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "code", "expires_in")
+    list_display = ("id", "user", "code", "expires_in", "is_active")
 
 
 @admin.register(UserAddress)
