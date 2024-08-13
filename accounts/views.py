@@ -50,6 +50,7 @@ class UserCreateView(CreateAPIView):
 #             "verification": sms_obj.id
 #         }, status=status.HTTP_200_OK)
 
+
 class VerifyOtpView(APIView):
     serializer_class = VerificationOtpSerializer
 
