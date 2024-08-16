@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework.exceptions import ValidationError
@@ -7,7 +8,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from rest_framework_simplejwt.tokens import AccessToken
 
 from accounts.models import *
-from accounts.utility import check_input_type
+from accounts.tasks import send_otp_code_to_email
+from accounts.utility import check_input_type, generate_code
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -16,10 +18,29 @@ class UserCreateSerializer(serializers.ModelSerializer):
         fields = ("first_name", "last_name", "email", "password")
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        user = super().create(validated_data)
-        if password:
-            user.set_password(password)
+        user = User.objects.filter(email=validated_data.get("email"), is_active=False).first()
+        if user is not None:
+            try:
+                sms = VerificationOtp.objects.get(
+                    user=user,
+                    type=VerificationOtp.VerificationType.REGISTER,
+                    expires_in__lt=timezone.now(),
+                    is_active=True
+                )
+                sms.expires_in = timezone.now() + settings.OTP_CODE_ACTIVATION_TIME
+                code = generate_code()
+                sms.code = code
+                sms.save()
+                send_otp_code_to_email(code=code, email=user.email)
+            except VerificationOtp.DoesNotExist:
+                pass  # No active OTP found, continue with the user creation/update
+            user.set_password(validated_data.get('password'))
+            user.save()
+        else:
+            user = User.objects.create(first_name=validated_data.get('first_name'),
+                                       last_name=validated_data.get('last_name'),
+                                       email=validated_data.get('email'))
+            user.set_password(validated_data.get('password'))
             user.save()
         return user
 
