@@ -14,6 +14,10 @@ class CartItem(models.Model):
     def __str__(self):
         return f"{self.user.id} - {self.product.name}"
 
+    def save(self, *args, **kwargs):
+        self.subtotal = self.product.price * self.quantity
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("Cart Item")
         verbose_name_plural = _("Cart Items")
