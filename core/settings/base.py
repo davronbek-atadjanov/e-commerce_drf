@@ -38,6 +38,7 @@ THIRD_PARTY_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
     'django_filters',
+    "debug_toolbar",
 ]
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS
@@ -50,7 +51,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: False,  # Debug Toolbar'ni o'chirish
+}
 
 ROOT_URLCONF = 'core.urls'
 
@@ -229,3 +235,8 @@ SPECTACULAR_SETTINGS = {
 
 CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+# DEBUG TOOLBAR
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

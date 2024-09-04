@@ -51,6 +51,18 @@ class VerificationOtpSerializer(serializers.Serializer):
     verify_type = serializers.ChoiceField(choices=VerificationOtp.VerificationType,required=True)
 
 
+class CreateUserAddressSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserAddress
+        fields = ("name", "phone_number", "apartment", "street", "pin_code")
+
+    # def create(self, validated_data):
+    #     user = self.context.get("user")
+    #     address = UserAddress.objects.create(user=user, **validated_data)
+    #     return address
+
+
 class ResetPasswordSerializer(serializers.Serializer):
     email = serializers.CharField(required=True)
 

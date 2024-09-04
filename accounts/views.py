@@ -1,7 +1,7 @@
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.exceptions import APIException
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -192,3 +192,21 @@ class LogOutView(APIView):
             return Response(data, status=206)
         except TokenError:
             return Response(status=400)
+
+
+class UserAddressCreateView(CreateAPIView, ListAPIView):
+    queryset = UserAddress.objects.all()
+    serializer_class = CreateUserAddressSerializers
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        return UserAddress.objects.filter(user=self.request.user)
+
+
+class UserAddressUpdateView(UpdateAPIView):
+    queryset = UserAddress.objects.all()
+    serializer_class = CreateUserAddressSerializers
+    permission_classes = [IsAuthenticated]
