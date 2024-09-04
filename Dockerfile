@@ -23,7 +23,7 @@ COPY requirements/ .
 
 # install dependencies
 RUN pip install --upgrade pip setuptools wheel
-RUN pip install -r development.txt
+RUN pip install -r production.txt
 
 # create directory for the app user
 RUN mkdir -p /home/app
