@@ -1,7 +1,7 @@
 from datetime import timedelta
 
-from decouple import config, Csv  # Import the config and Csv class from the decouple module
-from pathlib import Path  # Import the Path class from the pathlib module
+from decouple import config, Csv
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -15,7 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(), default=[])
-HOST = config("HOST")
+
 # Application definition
 LOCAL_APPS = [
     'django.contrib.admin',
@@ -92,7 +92,7 @@ DATABASES = {
 
     }
 }
-
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -240,3 +240,13 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://localhost:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}

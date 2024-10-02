@@ -20,7 +20,7 @@ class UserCreateView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
 
-#
+
 # class VerificationOtpView(CreateAPIView):
 #     queryset = VerificationOtp.objects.all()
 #     serializer_class = VerificationOtpSerializer
@@ -210,3 +210,4 @@ class UserAddressUpdateView(UpdateAPIView):
     queryset = UserAddress.objects.all()
     serializer_class = CreateUserAddressSerializers
     permission_classes = [IsAuthenticated]
+
