@@ -1,5 +1,7 @@
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
+from products.managers import ProductManager
+from django.core.cache import cache
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -34,9 +36,11 @@ class Product(models.Model):
     instructions = RichTextField(_("instructions"))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     in_stock = models.BooleanField(_("in stock"), default=True)
-    brand = models.CharField(_("brand"))
+    brand = models.CharField(_("brand"), max_length=255, null=True, blank=True)
     discount = models.IntegerField(_("discount"))
     thumbnail = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
+
+    objects = ProductManager()
 
     def __str__(self):
         return self.name
@@ -44,6 +48,10 @@ class Product(models.Model):
     class Meta:
         verbose_name = _("product")
         verbose_name_plural = _("products")
+
+    def save(self, *args, **kwargs):
+        cache.delete("all_products")
+        self.category.save()
 
 
 class ProductColor(models.Model):

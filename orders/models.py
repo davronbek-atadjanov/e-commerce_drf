@@ -44,6 +44,8 @@ class Discount(models.Model):
     percentage = models.FloatField(_("Percentage"))
     start_date = models.DateTimeField(_("Start Date"))
     end_date = models.DateTimeField(_("End Date"))
+    max_limit = models.IntegerField(_("Max Limit"))
+
 
     def __str__(self):
         return self.code
@@ -107,11 +109,12 @@ class Order(models.Model):
         PAYME = "payme", _("Payme")
 
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="orders")
-    status = models.CharField(_("Status"), max_length=20, choices=OrderStatus.choices)
+    status = models.CharField(_("Status"), max_length=20, choices=OrderStatus.choices, default=OrderStatus.CREATED)
     items = models.ManyToManyField(CartItem, related_name="orders")
     total_price = models.FloatField(_("Total Price"))
     address = models.ForeignKey("accounts.UserAddress", on_delete=models.CASCADE, related_name="orders")
     discount = models.ForeignKey(Discount, on_delete=models.SET_NULL, related_name="orders", null=True, blank=True)
-    payment_status = models.CharField(_("Payment Status"), max_length=20, choices=PaymentStatus.choices)
-    payment_method = models.CharField(_("Payment Method"), max_length=20, choices=PaymentMethod.choices)
+    payment_status = models.CharField(_("Payment Status"), max_length=20, choices=PaymentStatus.choices,null=True, blank=True)
+    payment_method = models.CharField(_("Payment Method"), max_length=20, choices=PaymentMethod.choices, null=True, blank=True)
     delivery_tariff = models.ForeignKey(DeliveryTariff, on_delete=models.SET_NULL, related_name="orders", null=True, blank=True)
+
