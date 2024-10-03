@@ -142,7 +142,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = '/home/davronb3/davronbek-django-projects.uz/django/static'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATIC_URL = '/static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = '/home/davronb3/davronbek-django-projects.uz/django/media'
 
