@@ -137,9 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATICFILES_DIRS = [
-    '/home/davronb3/davronbek-django-projects.uz/django/static_files'
-]
+STATICFILES_DIRS = ('/home/davronb3/davronbek-django-projects.uz/django/static_files')
 STATIC_ROOT = '/home/davronb3/davronbek-django-projects.uz/django/static'
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
