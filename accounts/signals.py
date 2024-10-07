@@ -7,7 +7,7 @@ from django.dispatch import receiver
 from accounts.models import User, VerificationOtp
 from accounts.tasks import send_otp_code_to_email
 from accounts.utility import generate_code
-from core.settings.base import OTP_CODE_ACTIVATION_TIME
+from core.settings import OTP_CODE_ACTIVATION_TIME
 
 
 @receiver(post_save, sender=User)

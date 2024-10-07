@@ -11,7 +11,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from accounts.models import *
 from accounts.serializers import *
 from accounts.utility import generate_code
-from core.settings.base import OTP_CODE_ACTIVATION_TIME
+from core.settings import OTP_CODE_ACTIVATION_TIME
 from accounts.tasks import send_otp_code_to_email
 
 
