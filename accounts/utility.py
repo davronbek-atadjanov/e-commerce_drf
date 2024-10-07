@@ -2,7 +2,7 @@ import secrets
 import re
 from django.core.exceptions import ValidationError
 
-from core.settings.base import EMAIL_HOST
+from core.settings import EMAIL_HOST
 email_regex = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
 
 def check_otp_code(value):
