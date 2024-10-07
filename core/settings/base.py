@@ -1,11 +1,6 @@
 from datetime import timedelta
-from django.conf import settings
 from decouple import config, Csv
 from pathlib import Path
-
-settings.configure(
-    ROOT_URLCONF=__name__,
-)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -142,16 +137,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-if DEBUG == True:
-    STATICFILES_DIRS = (BASE_DIR / 'static',)
-else:
-    STATIC_ROOT = BASE_DIR / 'static'
-
+# STATIC URLS
+STATICFILES_DIRS = ('/home/davronb3/davronbek-django-projects.uz/django/static_files',)
+STATIC_ROOT = '/home/davronb3/davronbek-django-projects.uz/django/static'
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Media urls
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = '/home/davronb3/davronbek-django-projects.uz/django/media'
 
 
 # Default primary key field type
